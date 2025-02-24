@@ -2,9 +2,11 @@ class StringCalculator
   def add(numbers)
     return 0 if numbers.empty?
     digits_array = digits(numbers)
-    return digits_array[0] if digits_array.length == 1
+    delimiter_pattern = delimiter(numbers)
 
-    digits_array.sum
+    negatives = digits_array.select(&:negative?)
+    raise "negative numbers not allowed #{negatives.join(',')}" unless negatives.empty?
+    digits_array.reduce {|sum, d| sum + d}
   end
 
   def digits(numbers)

@@ -27,4 +27,24 @@ class StringCalculatorTest < Minitest::Test
     assert_equal 6, @calc.add("1\n2,3")
   end
 
+	def test_single_negative_number_raises_exception
+    error = assert_raises(RuntimeError) { @calc.add("-1") }
+    assert_equal "negative numbers not allowed -1", error.message
+  end
+
+  def test_multiple_negative_numbers_raise_exception
+    error = assert_raises(RuntimeError) { @calc.add("-1,2,-3") }
+    assert_equal "negative numbers not allowed -1,-3", error.message
+  end
+
+  def test_negative_numbers_with_newline_delimiter
+    error = assert_raises(RuntimeError) { @calc.add("1\n-2,3,-4") }
+    assert_equal "negative numbers not allowed -2,-4", error.message
+  end
+
+  def test_negative_numbers_with_custom_delimiters
+    error = assert_raises(RuntimeError) { @calc.add("//;\n1;-2;3;-4") }
+    assert_equal "negative numbers not allowed -2,-4", error.message
+  end
+
 end
