@@ -27,6 +27,10 @@ class StringCalculatorTest < Minitest::Test
     assert_equal 6, @calc.add("1\n2,3")
   end
 
+	def test_with_letters
+		assert_equal 165, @calc.add("//x\n45x55x65")
+	end
+
 	def test_single_negative_number_raises_exception
     error = assert_raises(RuntimeError) { @calc.add("-1") }
     assert_equal "negative numbers not allowed -1", error.message
