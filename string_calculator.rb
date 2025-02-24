@@ -26,12 +26,10 @@ class StringCalculator
   end
 
   def custom_delimiters(numbers)
-    delimiters = numbers.match(%r{//(\[.*?\])+\n})
-    if delimiters
-      delimiters[1].scan(/\[(.*?)\]/).flatten.map { |d| Regexp.escape(d) }.join("|")
+    if numbers.start_with?("//[")
+      numbers.scan(/\[(.*?)\]/).flatten.map { |d| Regexp.escape(d) }.join("|")
     else
-      delimiter_section = numbers.split("\n", 2).first
-      Regexp.escape(delimiter_section[2..]) 
+      Regexp.escape(numbers[2])
     end
   end
 
